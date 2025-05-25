@@ -1,161 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tran Ngoc Duong - Game Dev Portfolio</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tran Ngoc Duong - Game Dev</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
   <style>
-    /* Nền gradient chuyển động */
-    .hero-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #1a1a2e);
-      background-size: 400%;
-      animation: gradientShift 15s ease infinite;
-      z-index: 0;
-      opacity: 0.8;
+    :root {
+      --neon-color: #00ffcc;
+      --bg-dark: #1a1a1a;
+      --highlight: #ff0077;
     }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Hiệu ứng gõ chữ */
-    .typing-effect {
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--neon-color);
+      text-shadow: 0 0 10px var(--neon-color);
+      border-bottom: 2px solid var(--highlight);
       display: inline-block;
-      white-space: normal; /* Cho phép xuống dòng trên mobile */
-      overflow: hidden;
-      border-right: 3px solid #00ffcc;
-      animation: typing 3s steps(40, end) 1s 1 normal both, blink 0.5s step-end infinite;
+      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
     }
 
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
+    .certificate-wrapper iframe {
+      margin-bottom: 1rem;
+      border: 2px solid var(--neon-color);
+      box-shadow: 0 0 10px var(--neon-color);
     }
 
-    @keyframes blink {
-      50% { border-color: transparent; }
+    .certificate-wrapper a {
+      margin-bottom: 2rem;
     }
 
-    /* Avatar */
-    .hero-avatar {
-      border: 3px solid #00ffcc;
-      box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
-    }
-
-    /* Đảm bảo nội dung nằm trên nền */
-    .container.position-relative {
-      z-index: 1;
-    }
-
-    /* Responsive cho Hero Section */
-    @media (max-width: 576px) {
-      .hero-avatar {
-        width: 120px;
-        height: 120px;
-      }
-      .display-4 {
-        font-size: 2.5rem; /* Giảm kích thước chữ trên mobile */
-      }
-      .typing-effect {
-        font-size: 1rem; /* Giảm kích thước chữ */
-        animation: typing 2s steps(30, end) 1s 1 normal both, blink 0.5s step-end infinite; /* Rút ngắn thời gian gõ */
-      }
-    }
-
-    /* Responsive cho PDF */
-    .pdf-container {
-      width: 100%;
-      height: 500px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    @media (max-width: 576px) {
-      .pdf-container {
-        height: 300px; /* Giảm chiều cao trên mobile */
-      }
+    .card .btn {
+      font-size: 0.9rem;
     }
   </style>
 </head>
-<body class="bg-light">
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <div class="container">
-    <a class="navbar-brand" href="#">Trần Ngọc Dương</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- Hero Section -->
-<section id="home" class="vh-100 d-flex align-items-center text-center text-white position-relative overflow-hidden">
-  <div class="hero-bg"></div>
-  <div class="container position-relative">
-    <img src="Images/z6548590580769_356e5d5333f21b22380c55d1355f9012.jpg" class="rounded-circle mb-4 hero-avatar" alt="Avatar" style="width: 150px; height: 150px; object-fit: cover;">
-    <h1 class="display-4 fw-bold animate__animated animate__fadeIn">Trần Ngọc Dương</h1>
-    <p class="lead typing-effect">Xin chào, mình là một game dev level 1 đang học làm game</p>
-    <div class="d-flex justify-content-center gap-3 mt-4">
-      <a href="#portfolio" class="btn btn-primary">Khám phá game</a>
-      <a href="#contact" class="btn btn-outline-light">Liên hệ ngay</a>
-    </div>
-  </div>
-</section>
-
-<!-- About Section -->
-<section id="about" class="py-5 bg-light">
-  <div class="container">
-    <h2 class="text-center mb-5">Về bản thân</h2>
-    <div class="row align-items-center">
-      <div class="col-md-5 text-center mb-4 mb-md-0">
-        <img src="Images/avarta.jpg" class="img-fluid rounded" alt="About Image" style="max-width: 70%;">
+<body class="bg-dark">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-uppercase text-neon" href="#">Trần Ngọc Dương</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#home">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">Giới thiệu</a></li>
+          <li class="nav-item"><a class="nav-link" href="#portfolio">Game</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Liên hệ</a></li>
+        </ul>
       </div>
-      <div class="col-md-7">
-        <h3>Hành trình game dev</h3>
-        <p>Mình là sinh viên IT đam mê lập trình game, bắt đầu từ năm 3 đại học. Tự học Unity qua YouTube và khóa học online.</p>
-        <p>Đã theo hành trình này 4 tháng và tự hào với những thành quả nhỏ. Mỗi ngày đều cố gắng học hỏi để chạm tới giấc mơ trở thành một game developer thực thụ.</p>
-        <p>Mình có khả năng tự học tốt, đặc biệt là có đam mê mãnh liệt với lập trình game. Mình có hơn 10 năm kinh nghiệm trong việc chơi game, trong suốt thời gian đó mình đã chơi qua rất nhiều tựa game trên mobile và PC :></p>
-        <div class="container">
-          <div class="row">
-            <h5 style="color: blue; border-bottom: 2px solid coral;">Chứng chỉ của mình</h5>
-            <div class="pdf-container">
-              <iframe src="Images/Unlock Game Dev Level 1.pdf" style="width: 100%; height: 100%; border: none;" title="Unlock Game Dev Level 1 Certificate"></iframe>
-              <a href="Images/Unlock Game Dev Level 1.pdf"  class="btn btn-primary btn-sm">Xem chi tiết</a>
-            </div>
-            
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="vh-100 d-flex align-items-center justify-content-center text-white text-center position-relative overflow-hidden">
+    <div class="hero-bg position-absolute top-0 start-0 w-100 h-100"></div>
+    <div class="container position-relative">
+      <img src="Images/z6548590580769_356e5d5333f21b22380c55d1355f9012.jpg" class="rounded-circle shadow-lg hero-avatar mb-4" alt="Avatar" style="width: 150px; height: 150px; object-fit: cover;">
+      <h1 class="display-5 fw-bold">Trần Ngọc Dương</h1>
+      <p class="typing-effect">Game dev level 1 - Đam mê sáng tạo thế giới ảo</p>
+      <div class="mt-4 d-flex justify-content-center gap-3">
+        <a href="#portfolio" class="btn btn-primary">Xem Game</a>
+        <a href="#contact" class="btn btn-outline-light">Liên hệ</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-5 bg-white">
+    <div class="container">
+      <h2 class="text-center section-title text-dark ">Giới thiệu</h2>
+      <div class="row align-items-center">
+        <div class="col-md-5 mb-4 mb-md-0 text-center">
+          <img src="Images/avarta.jpg" class="img-fluid rounded shadow" alt="About Image" style="max-width: 75%;">
+        </div>
+        <div class="col-md-7">
+          <h3 class="text-primary">Hành trình trở thành Game Developer</h3>
+          <p>Là sinh viên IT đam mê làm game, mình đã tự học Unity từ năm 3. Với tinh thần tự học và niềm đam mê lớn, mình đã xây dựng được nhiều sản phẩm thú vị trong 4 tháng qua.</p>
+          <p>Bên cạnh đó, mình là một "gamer" thực thụ, với hơn 10 năm kinh nghiệm chơi game – giúp mình hiểu rõ tâm lý người chơi và thiết kế trò chơi hấp dẫn hơn.</p>
+          <div class="certificate-wrapper mt-4">
+            <iframe src="Images/Unlock Game Dev Level 1.pdf" width="100%" height="300"></iframe>
+            <a href="Images/Unlock Game Dev Level 1.pdf" class="btn btn-sm btn-primary d-block w-100">Chứng chỉ: Level 1 Game Dev</a>
+            <iframe src="Images/Coursera RVYGY9M0C08C.pdf" width="100%" height="300"></iframe>
+            <a href="Images/Coursera RVYGY9M0C08C.pdf" class="btn btn-sm btn-primary d-block w-100">Chứng chỉ: Coursera Unity</a>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Portfolio Section -->
-<section id="portfolio" class="py-5 bg-dark text-white">
-  <div class="container">
-    <h2 class="text-center mb-5" style="font-family: 'KnightWarrior', 'Orbitron', sans-serif; color: #00ffcc; text-shadow: 0 0 10px #00ffcc;">
-      Game của mình
-    </h2>
-    <div class="row g-4">
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="py-5 bg-dark text-white">
+    <div class="container">
+      <h2 class="text-center section-title text-dark">Game đã phát triển</h2>
+      <!-- Game cards được giữ nguyên cấu trúc cũ -->
+       <div class="row g-4">
       <!-- Game Card 1 -->
       <div class="col-md-6 col-lg-4">
         <div class="card h-100 bg-secondary text-white project-card">
@@ -322,33 +268,31 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
+    </div>
+  </section>
 
-<!-- Contact Section -->
-<section id="contact" class="py-5 bg-white">
-  <div class="container">
-    <h2 class="text-center mb-5">Liên hệ</h2>
-    <div class="row justify-content-center">
-      <div class="col-md-6 text-center">
-        <p>Email: <a href="mailto:ngocrong.5102004@gmail.com" class="text-primary">ngocrong.5102004@gmail.com</a></p>
-        <p>Liên hệ với mình ở đây:</p>
-        <div class="d-flex justify-content-center gap-3">
-          <a href="https://github.com/TranNgocDuong-bodoi" class="btn btn-outline-primary">GitHub</a>
-          <a href="https://zalo.me/0818930855" class="btn btn-outline-primary">Zalo</a>
-          <a href="https://discord.gg/mMWpFYK8KJ" class="btn btn-outline-primary">Discord</a>
+  <!-- Contact Section -->
+  <section id="contact" class="py-5 bg-white text-dark">
+    <div class="container">
+      <h2 class="text-center section-title text-shadow text-dark">Liên hệ</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+          <p>Email: <a href="mailto:ngocrong.5102004@gmail.com">ngocrong.5102004@gmail.com</a></p>
+          <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="https://github.com/TranNgocDuong-bodoi" class="btn btn-outline-dark">GitHub</a>
+            <a href="https://zalo.me/0818930855" class="btn btn-outline-dark">Zalo</a>
+            <a href="https://discord.gg/mMWpFYK8KJ" class="btn btn-outline-dark">Discord</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-3">
-  <p>© 2025 Trần Ngọc Dương. Built with passion.</p>
-</footer>
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3 mt-4">
+    <p class="mb-0">© 2025 Trần Ngọc Dương | Game Dev Portfolio</p>
+  </footer>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
