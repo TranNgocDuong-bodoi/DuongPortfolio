@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tổng Hợp Kiến Thức về State Machine trong Unity</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+        .header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+        .header-text {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .header-buttons button, .header-buttons a {
+            padding: 8px 16px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            background-color: #2c3e50;
+            transition: background-color 0.3s;
+        }
+        .header-buttons button:hover, .header-buttons a:hover {
+            background-color: #1a252f;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #34495e;
+            font-size: 1.8em;
+            margin-top: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-top: 20px;
+        }
+        p, ul {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 30px;
+        }
+        ul ul {
+            list-style-type: circle;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .references {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .references a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .references a:hover {
+            text-decoration: underline;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95em;
+            margin: 10px 0;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            h3 {
+                font-size: 1.2em;
+            }
+            .header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .header img {
+                width: 50px;
+                height: 50px;
+            }
+            .header-text {
+                font-size: 1em;
+            }
+            .header-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .header-buttons button, .header-buttons a {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="../Images/avarta.jpg" alt="Avatar">
+        <div class="header-text">Trần Ngọc Dương - Unity Game Development</div>
+        <div class="header-buttons">
+            <button onclick="history.back()">Quay Lại Trang Trước</button>
+            <a href="../index.html">Trang Chủ</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Tổng Hợp Kiến Thức về State Machine trong Unity</h1>
+
+        <div class="section">
+            <h2>State Machine là Gì?</h2>
+            <p><strong>State Machine (Máy trạng thái)</strong> là một phương pháp tổ chức logic trong game, giúp quản lý các trạng thái (states) của một đối tượng và chuyển đổi (transitions) giữa chúng.</p>
+            <p>Ví dụ: Trong game <em>Besties Bay</em>, quái vật có các trạng thái:</p>
+            <ul>
+                <li><strong>Idle (Đứng yên)</strong>: Chờ người chơi.</li>
+                <li><strong>Follow (Đi theo)</strong>: Đuổi theo người chơi khi đến gần.</li>
+                <li><strong>Captured (Bị bắt)</strong>: Dừng lại khi người chơi thu phục.</li>
+            </ul>
+            <p><strong>Lợi ích</strong>: Logic rõ ràng, dễ mở rộng, tạo hành vi tự nhiên cho nhân vật.</p>
+        </div>
+
+        <div class="section">
+            <h2>Hai Cách Triển Khai State Machine trong Unity</h2>
+            <h3>Cách 1: Dùng BaseState và Concrete States</h3>
+            <p><strong>Ý tưởng</strong>: Tạo lớp trừu tượng <code>BaseState</code> để định nghĩa các phương thức, sau đó tạo các trạng thái cụ thể (Concrete States) kế thừa từ nó. <code>StateManagement</code> (Context) quản lý và chuyển đổi trạng thái.</p>
+            <p><strong>Ưu điểm</strong>: Logic tách biệt, dễ mở rộng cho game phức tạp.</p>
+            <p><strong>Nhược điểm</strong>: Nhiều code, phức tạp hơn.</p>
+            <p><strong>Code chi tiết:</strong></p>
+            <h4>Context (StateManagement)</h4>
+            <p>Quản lý trạng thái, gắn vào GameObject.</p>
+            <pre><code class="language-csharp">using UnityEngine;
+
+public class StateManagement : MonoBehaviour
+{
+    private BaseState currentState;
+    public BaseState idleState;
+    public BaseState followState;
+    public BaseState capturedState;
+
+    void Start()
+    {
+        idleState = new IdleState();
+        followState = new FollowState();
+        capturedState = new CapturedState();
+
+        currentState = idleState;
+        currentState.EnterState(this);
+    }
+
+    void Update()
+    {
+        if (currentState != null)
+        {
+            currentState.UpdateState(this);
+        }
+    }
+
+    public void SwitchState(BaseState newState)
+    {
+        if (currentState != null)
+        {
+            currentState.ExitState(this);
+        }
+        currentState = newState;
+        currentState.EnterState(this);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (currentState != null)
+        {
+            currentState.OnCollisionEnter2D(this, collision);
+        }
+    }
+}</code></pre>
+            <h4>Abstract State (BaseState)</h4>
+            <p>Định nghĩa các phương thức cho trạng thái.</p>
+            <pre><code class="language-csharp">public abstract class BaseState
+{
+    public abstract void EnterState(StateManagement management);
+    public abstract void UpdateState(StateManagement management);
+    public abstract void ExitState(StateManagement management);
+    public abstract void OnCollisionEnter2D(StateManagement management, Collision2D collision);
+}</code></pre>
+            <h4>Concrete States</h4>
+            <p>Triển khai logic cụ thể.</p>
+            <p><strong>IdleState</strong>:</p>
+            <pre><code class="language-csharp">public class IdleState : BaseState
+{
+    public override void EnterState(StateManagement management)
+    {
+        Debug.Log("Monster entered Idle state");
+    }
+
+    public override void UpdateState(StateManagement management)
+    {
+        Transform player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player != null && Vector2.Distance(management.transform.position, player.position) < 5f)
+        {
+            management.SwitchState(management.followState);
+        }
+    }
+
+    public override void ExitState(StateManagement management)
+    {
+        Debug.Log("Monster exited Idle state");
+    }
+
+    public override void OnCollisionEnter2D(StateManagement management, Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            management.SwitchState(management.capturedState);
+        }
+    }
+}</code></pre>
+            <p><strong>FollowState</strong>:</p>
+            <pre><code class="language-csharp">public class FollowState : BaseState
+{
+    private float speed = 2f;
+
+    public override void EnterState(StateManagement management)
+    {
+        Debug.Log("Monster entered Follow state");
+    }
+
+    public override void UpdateState(StateManagement management)
+    {
+        Transform player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player != null)
+        {
+            Vector2 direction = (player.position - management.transform.position).normalized;
+            management.transform.position += (Vector3)direction * speed * Time.deltaTime;
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            management.SwitchState(management.capturedState);
+        }
+    }
+
+    public override void ExitState(StateManagement management)
+    {
+        Debug.Log("Monster exited Follow state");
+        Rigidbody2D rb = management.GetComponent<Rigidbody2D>();
+        if (rb != null) rb.velocity = Vector2.zero;
+    }
+
+    public override void OnCollisionEnter2D(StateManagement management, Collision2D collision)
+    {
+        if (collision.gameObject.CompareTight("Player"))
+        {
+            management.SwitchState(management.capturedState);
+        }
+    }
+}</code></pre>
+            <p><strong>CapturedState</strong>:</p>
+            <pre><code class="language-csharp">public class CapturedState : BaseState
+{
+    public override void EnterState(StateManagement management)
+    {
+        Debug.Log("Monster entered Captured state");
+        Rigidbody2D rb = management.GetComponent<Rigidbody2D>();
+        if (rb != null) rb.velocity = Vector2.zero;
+        SpriteRenderer sr = management.GetComponent<SpriteRenderer>();
+        if (sr != null) sr.color = Color.gray;
+    }
+
+    public override void UpdateState(StateManagement management)
+    {
+        // Không làm gì
+    }
+
+    public override void ExitState(StateManagement management)
+    {
+        Debug.Log("Monster exited Captured state");
+        SpriteRenderer sr = management.GetComponent<SpriteRenderer>();
+        if (sr != null) sr.color = Color.white;
+    }
+
+    public override void OnCollisionEnter2D(StateManagement management, Collision2D collision)
+    {
+        // Không làm gì
+    }
+}</code></pre>
+            <p><strong>Cách hoạt động</strong>:</p>
+            <ul>
+                <li>Quái vật bắt đầu ở trạng thái <code>Idle</code>.</li>
+                <li>Khi người chơi đến gần (< 5 đơn vị), chuyển sang <code>Follow</code>.</li>
+                <li>Khi nhấn phím C hoặc va chạm với người chơi, chuyển sang <code>Captured</code>.</li>
+                <li><code>ExitState()</code> dọn dẹp (dừng di chuyển, reset màu) trước khi chuyển trạng thái.</li>
+            </ul>
+
+            <h3>Cách 2: Dùng Enum</h3>
+            <p><strong>Ý tưởng</strong>: Dùng <code>enum</code> liệt kê trạng thái, xử lý logic trong <code>StateManagement</code> bằng <code>switch-case</code>.</p>
+            <p><strong>Ưu điểm</strong>: Đơn giản, ít code, dễ cho người mới.</p>
+            <p><strong>Nhược điểm</strong>: Logic tập trung, khó mở rộng nếu nhiều trạng thái.</p>
+            <p><strong>Code chi tiết:</strong></p>
+            <h4>Enum (MonsterState)</h4>
+            <p>Liệt kê các trạng thái.</p>
+            <pre><code class="language-csharp">public enum MonsterState
+{
+    Idle,
+    Follow,
+    Captured
+}</code></pre>
+            <h4>Context (StateManagement)</h4>
+            <p>Quản lý trạng thái bằng enum.</p>
+            <pre><code class="language-csharp">using UnityEngine;
+
+public class StateManagement : MonoBehaviour
+{
+    private MonsterState currentState;
+    private Transform player;
+    private float followDistance = 5f;
+    private float speed = 2f;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        currentState = MonsterState.Idle;
+        EnterState();
+    }
+
+    void Update()
+    {
+        UpdateState();
+    }
+
+    public void SwitchState(MonsterState newState)
+    {
+        ExitState();
+        currentState = newState;
+        EnterState();
+    }
+
+    private void EnterState()
+    {
+        switch (currentState)
+        {
+            case MonsterState.Idle:
+                Debug.Log("Monster entered Idle state");
+                break;
+            case MonsterState.Follow:
+                Debug.Log("Monster entered Follow state");
+                break;
+            case MonsterState.Captured:
+                Debug.Log("Monster entered Captured state");
+                Rigidbody2D rb = GetComponent<Rigidbody2D>();
+                if (rb != null) rb.velocity = Vector2.zero;
+                SpriteRenderer sr = GetComponent<SpriteRenderer>();
+                if (sr != null) sr.color = Color.gray;
+                break;
+        }
+    }
+
+    private void UpdateState()
+    {
+        switch (currentState)
+        {
+            case MonsterState.Idle:
+                if (player != null && Vector2.Distance(transform.position, player.position) < followDistance)
+                {
+                    SwitchState(MonsterState.Follow);
+                }
+                break;
+            case MonsterState.Follow:
+                if (player != null)
+                {
+                    Vector2 direction = (player.position - transform.position).normalized;
+                    transform.position += (Vector3)direction * speed * Time.deltaTime;
+                }
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    SwitchState(MonsterState.Captured);
+                }
+                break;
+            case MonsterState.Captured:
+                break;
+        }
+    }
+
+    private void ExitState()
+    {
+        switch (currentState)
+        {
+            case MonsterState.Idle:
+                Debug.Log("Monster exited Idle state");
+                break;
+            case MonsterState.Follow:
+                Debug.Log("Monster exited Follow state");
+                Rigidbody2D rb = GetComponent<Rigidbody2D>();
+                if (rb != null) rb.velocity = Vector2.zero;
+                break;
+            case MonsterState.Captured:
+                Debug.Log("Monster exited Captured state");
+                SpriteRenderer sr = GetComponent<SpriteRenderer>();
+                if (sr != null) sr.color = Color.white;
+                break;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            SwitchState(MonsterState.Captured);
+        }
+    }
+}</code></pre>
+            <p><strong>Cách hoạt động</strong>:</p>
+            <ul>
+                <li>Tương tự cách 1, nhưng logic xử lý trong <code>StateManagement</code> bằng <code>switch-case</code>.</li>
+                <li>Dễ thêm trạng thái mới (như <code>Escape</code>) bằng cách thêm vào <code>MonsterState</code> và xử lý trong <code>switch</code>.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>So Sánh Hai Cách Triển Khai</h2>
+            <table>
+                <tr>
+                    <th>Tiêu chí</th>
+                    <th>BaseState + Concrete States</th>
+                    <th>Enum</th>
+                </tr>
+                <tr>
+                    <td>Độ phức tạp</td>
+                    <td>Phức tạp, nhiều lớp</td>
+                    <td>Đơn giản, ít code</td>
+                </tr>
+                <tr>
+                    <td>Tính mở rộng</td>
+                    <td>Dễ cho logic phức tạp</td>
+                    <td>Khó nếu nhiều trạng thái</td>
+                </tr>
+                <tr>
+                    <td>Hiệu suất</td>
+                    <td>Tốn tài nguyên hơn</td>
+                    <td>Nhẹ, hiệu quả</td>
+                </tr>
+                <tr>
+                    <td>Dễ học</td>
+                    <td>Khó hơn cho người mới</td>
+                    <td>Dễ hơn, phù hợp người mới</td>
+                </tr>
+            </table>
+            <p><strong>Khi nào dùng:</strong></p>
+            <ul>
+                <li><strong>BaseState</strong>: Phù hợp cho game lớn (như <em>Ark</em>) với trạng thái phức tạp.</li>
+                <li><strong>Enum</strong>: Phù hợp cho game nhỏ (như <em>Wacky Breakout</em>) hoặc người mới học.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Các Phương Thức Quan Trọng trong State Machine</h2>
+            <ul>
+                <li><strong>EnterState()</strong>: Gọi khi vào trạng thái (bắt đầu logic, như đổi màu, phát animation).</li>
+                <li><strong>UpdateState()</strong>: Xử lý logic mỗi frame (di chuyển, kiểm tra điều kiện).</li>
+                <li><strong>ExitState()</strong>: Dọn dẹp khi rời trạng thái (dừng di chuyển, reset màu).</li>
+                <li><strong>SwitchState()</strong>: Chuyển đổi trạng thái (gọi ExitState → gán trạng thái mới → EnterState).</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Lưu Ý Quan Trọng</h2>
+            <ul>
+                <li><strong>Không gán currentState = null</strong>: Đảm bảo State Machine luôn có trạng thái hoạt động để tránh lỗi <code>NullReferenceException</code>.</li>
+                <li><strong>Dọn dẹp trong ExitState()</strong>: Tránh trạng thái cũ ảnh hưởng trạng thái mới (dừng di chuyển, tắt âm thanh).</li>
+                <li><strong>Kiểm tra null</strong>: Trong <code>Update()</code>, kiểm tra <code>currentState != null</code> để tránh lỗi.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Tài Nguyên Đề Xuất</h2>
+            <ul>
+                <li><strong>Unity Learn</strong>: Lộ trình miễn phí về State Machines trong Unity.</li>
+                <li><strong>GameDev.tv (Udemy)</strong>: Khóa học Unity nâng cao, bao gồm State Machine.</li>
+                <li><strong>Cộng đồng</strong>: Tham gia Unity Forum, StackOverflow, nhóm Unity Việt Nam (Facebook).</li>
+            </ul>
+        </div>
+
+        <div class="section references">
+            <h2>Nguồn Tham Khảo</h2>
+            <p>Tài liệu từ: <a href="https://learn.unity.com">Unity Learn</a>, <a href="https://gamedev.tv">GameDev.tv</a>, <a href="https://docs.unity3d.com">Unity Documentation</a>.</p>
+        </div>
+    </div>
+</body>
+</html>
