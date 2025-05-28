@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới Thiệu về SOLID trong Unity Game Development</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+        .header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .header img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+        .header-text {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .header-buttons button, .header-buttons a {
+            padding: 8px 16px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            background-color: #2c3e50;
+            transition: background-color 0.3s;
+        }
+        .header-buttons button:hover, .header-buttons a:hover {
+            background-color: #1a252f;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #34495e;
+            font-size: 1.8em;
+            margin-top: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-top: 20px;
+        }
+        p, ul {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 30px;
+        }
+        ul ul {
+            list-style-type: circle;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .references {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .references a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .references a:hover {
+            text-decoration: underline;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95em;
+            margin: 10px 0;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            h3 {
+                font-size: 1.2em;
+            }
+            .header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .header img {
+                width: 50px;
+                height: 50px;
+            }
+            .header-text {
+                font-size: 1em;
+            }
+            .header-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .header-buttons button, .header-buttons a {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="../Images/avarta.jpg" alt="Avatar">
+        <div class="header-text">Trần Ngọc Dương - Unity Game Development</div>
+        <div class="header-buttons">
+            <button onclick="history.back()">Quay Lại Trang Trước</button>
+            <a href="../index.html">Trang Chủ</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Giới Thiệu về SOLID trong Unity Game Development</h1>
+
+        <div class="section">
+            <h2>Khái Quát về SOLID</h2>
+            <p><strong>SOLID</strong> là tập hợp 5 nguyên tắc thiết kế hướng đối tượng (Object-Oriented Design) giúp code dễ bảo trì, mở rộng và giảm lỗi, đặc biệt hữu ích trong lập trình game Unity:</p>
+            <ul>
+                <li><strong>Single Responsibility Principle (SRP)</strong>: Một class chỉ nên có một lý do để thay đổi.</li>
+                <li><strong>Open/Closed Principle (OCP)</strong>: Mở để mở rộng, đóng để sửa đổi.</li>
+                <li><strong>Liskov Substitution Principle (LSP)</strong>: Class con phải thay thế được class cha mà không gây lỗi.</li>
+                <li><strong>Interface Segregation Principle (ISP)</strong>: Class không nên phụ thuộc vào các method không dùng.</li>
+                <li><strong>Dependency Inversion Principle (DIP)</strong>: Phụ thuộc vào abstraction, không phải implementation.</li>
+            </ul>
+            <p>Dưới đây là giải thích từng nguyên tắc, áp dụng vào game <em>Chiến Cơ Không Gian</em>, kèm ví dụ code.</p>
+        </div>
+
+        <div class="section">
+            <h2>1. Single Responsibility Principle (SRP)</h2>
+            <p><strong>Ý nghĩa</strong>: Một class chỉ nên đảm nhận một trách nhiệm duy nhất, tránh gộp nhiều chức năng.</p>
+            <p><strong>Ví dụ trong game</strong>: Trong <em>Chiến Cơ Không Gian</em>, nếu <code>InputManager</code> vừa xử lý input (di chuyển, bắn) vừa spawn đạn, nó vi phạm SRP. Nên tách logic spawn đạn vào <code>BulletSpawner</code>.</p>
+            <p><strong>Áp dụng</strong>:</p>
+            <ul>
+                <li><code>InputManager</code>: Chỉ xử lý input (onMove, onFirePressed).</li>
+                <li><code>BulletSpawner</code>: Chỉ spawn đạn khi nhận tín hiệu.</li>
+            </ul>
+            <p><strong>Code ví dụ</strong>:</p>
+            <pre><code class="language-csharp">// InputManager: Chỉ xử lý input
+using UnityEngine;
+using System;
+
+public class InputManager : MonoBehaviour
+{
+    public event Action<Vector2> onMove;
+    public event Action<bool> onFirePressed;
+
+    void Update()
+    {
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+        onMove?.Invoke(new Vector2(moveX, moveY));
+
+        if (Input.GetKeyDown(KeyCode.F))
+            onFirePressed?.Invoke(true);
+        if (Input.GetKeyUp(KeyCode.F))
+            onFirePressed?.Invoke(false);
+    }
+}
+
+// BulletSpawner: Chỉ xử lý spawn đạn
+public class BulletSpawner : MonoBehaviour
+{
+    public GameObject bulletPrefab;
+    private void OnEnable()
+    {
+        FindObjectOfType<InputManager>().onFirePressed += SpawnBullet;
+    }
+
+    private void OnDisable()
+    {
+        FindObjectOfType<InputManager>().onFirePressed -= SpawnBullet;
+    }
+
+    void SpawnBullet(bool isPressed)
+    {
+        if (isPressed && bulletPrefab != null)
+        {
+            Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        }
+    }
+}
+</code></pre>
+            <p><strong>Lợi ích</strong>: Tách trách nhiệm giúp <code>InputManager</code> và <code>BulletSpawner</code> dễ sửa đổi, bảo trì.</p>
+        </div>
+
+        <div class="section">
+            <h2>2. Open/Closed Principle (OCP)</h2>
+            <p><strong>Ý nghĩa</strong>: Class nên mở để thêm tính năng mới nhưng đóng để không sửa code cũ.</p>
+            <p><strong>Ví dụ trong game</strong>: Thêm loại đạn mới (normal, laser) mà không sửa <code>BulletSpawner</code>.</p>
+            <p><strong>Áp dụng</strong>:</p>
+            <ul>
+                <li>Tạo interface <code>IBullet</code> cho hành vi đạn.</li>
+                <li>Dùng polymorphism để thêm loại đạn mới.</li>
+            </ul>
+            <p><strong>Code ví dụ</strong>:</p>
+            <pre><code class="language-csharp">// Interface cho các loại đạn
+public interface IBullet
+{
+    void Shoot();
+}
+
+// Đạn thường
+public class NormalBullet : MonoBehaviour, IBullet
+{
+    public void Shoot()
+    {
+        transform.Translate(Vector2.up * 5 * Time.deltaTime);
+    }
+}
+
+// Đạn laser (có thể thêm sau mà không sửa code cũ)
+public class LaserBullet : MonoBehaviour, IBullet
+{
+    public void Shoot()
+    {
+        transform.Translate(Vector2.up * 10 * Time.deltaTime);
+    }
+}
+
+// BulletSpawner: Sử dụng interface để spawn đạn
+public class BulletSpawner : MonoBehaviour
+{
+    public MonoBehaviour bulletType; // Kiểu MonoBehaviour để kéo thả trong Unity
+    private IBullet bullet;
+
+    private void Start()
+    {
+        bullet = bulletType as IBullet;
+    }
+
+    private void OnEnable()
+    {
+        FindObjectOfType<InputManager>().onFirePressed += SpawnBullet;
+    }
+
+    private void OnDisable()
+    {
+        FindObjectOfType<InputManager>().onFirePressed -= SpawnBullet;
+    }
+
+    void SpawnBullet(bool isPressed)
+    {
+        if (isPressed && bullet != null)
+        {
+            GameObject bulletObj = Instantiate(bulletType.gameObject, transform.position, Quaternion.identity);
+            IBullet bulletInstance = bulletObj.GetComponent<IBullet>();
+            bulletInstance.Shoot();
+        }
+    }
+}
+</code></pre>
+            <p><strong>Lợi ích</strong>: Thêm <code>LaserBullet</code> chỉ cần kéo thả trong Unity, không sửa <code>BulletSpawner</code>.</p>
+        </div>
+
+        <div class="section">
+            <h2>3. Liskov Substitution Principle (LSP)</h2>
+            <p><strong>Ý nghĩa</strong>: Class con phải thay thế được class cha mà không gây lỗi.</p>
+            <p><strong>Ví dụ trong game</strong>: Trong <em>Chế độ Chiến Dịch</em>, <code>Boss</code> (con) thay thế <code>Enemy</code> (cha) trong wave mà không lỗi.</p>
+            <p><strong>Áp dụng</strong>:</p>
+            <ul>
+                <li><code>Boss</code> kế thừa <code>Enemy</code>, override <code>TakeDamage</code> hợp lý.</li>
+            </ul>
+            <p><strong>Code ví dụ</strong>:</p>
+            <pre><code class="language-csharp">// Class Enemy cha
+public class Enemy : MonoBehaviour
+{
+    public int health = 10;
+    public virtual void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0) Destroy(gameObject);
+    }
+}
+
+// Class Boss con, kế thừa Enemy
+public class Boss : Enemy
+{
+    public override void TakeDamage(int damage)
+    {
+        health -= damage / 2; // Boss chịu ít sát thương hơn
+        if (health <= 0) Destroy(gameObject);
+    }
+}
+
+// WaveManager: Quản lý wave, dùng Enemy mà không quan tâm là Enemy hay Boss
+public class WaveManager : MonoBehaviour
+{
+    public List<Enemy> enemies;
+
+    public void DamageAllEnemies(int damage)
+    {
+        foreach (var enemy in enemies)
+        {
+            enemy.TakeDamage(damage); // Có thể là Enemy hoặc Boss
+        }
+    }
+}
+</code></pre>
+            <p><strong>Lợi ích</strong>: <code>Boss</code> thay <code>Enemy</code> trong wave mà không gây lỗi, phù hợp cho <em>Chế độ Chiến Dịch</em>.</p>
+        </div>
+
+        <div class="section">
+            <h2>4. Interface Segregation Principle (ISP)</h2>
+            <p><strong>Ý nghĩa</strong>: Class không nên bị buộc implement các method không dùng.</p>
+            <p><strong>Ví dụ trong game</strong>: Nếu interface lớn chứa cả <code>Move</code> và <code>Shoot</code>, nhưng <code>Enemy</code> chỉ cần <code>Move</code>, điều này vi phạm ISP.</p>
+            <p><strong>Áp dụng</strong>:</p>
+            <ul>
+                <li>Tách thành <code>IMove</code> và <code>IShoot</code>.</li>
+                <li>Class chỉ implement interface cần.</li>
+            </ul>
+            <p><strong>Code ví dụ</strong>:</p>
+            <pre><code class="language-csharp">// Interface cho di chuyển
+public interface IMove
+{
+    void Move(Vector2 direction);
+}
+
+// Interface cho bắn
+public interface IShoot
+{
+    void Shoot();
+}
+
+// Player: Cần cả Move và Shoot
+public class PlayerController : MonoBehaviour, IMove, IShoot
+{
+    public void Move(Vector2 direction)
+    {
+        transform.Translate(direction * 5 * Time.deltaTime);
+    }
+
+    public void Shoot()
+    {
+        Debug.Log("Player shoots!");
+    }
+}
+
+// Enemy: Chỉ cần Move
+public class EnemyController : MonoBehaviour, IMove
+{
+    public void Move(Vector2 direction)
+    {
+        transform.Translate(direction * 3 * Time.deltaTime);
+    }
+}
+</code></pre>
+            <p><strong>Lợi ích</strong>: <code>EnemyController</code> không phải implement <code>Shoot</code>, giảm rủi ro lỗi.</p>
+        </div>
+
+        <div class="section">
+            <h2>5. Dependency Inversion Principle (DIP)</h2>
+            <p><strong>Ý nghĩa</strong>: Module cấp cao phụ thuộc vào abstraction (interface), không phải implementation cụ thể.</p>
+            <p><strong>Ví dụ trong game</strong>: <code>GameManager</code> không nên phụ thuộc trực tiếp vào <code>InputManager</code>.</p>
+            <p><strong>Áp dụng</strong>:</p>
+            <ul>
+                <li>Tạo <code>IInputHandler</code>, <code>InputManager</code> implement nó.</li>
+                <li><code>GameManager</code> dùng <code>IInputHandler</code>.</li>
+            </ul>
+            <p><strong>Code ví dụ</strong>:</p>
+            <pre><code class="language-csharp">// Interface cho input
+using System;
+
+public interface IInputHandler
+{
+    event Action<Vector2> onMove;
+    event Action<bool> onFirePressed;
+}
+
+// InputManager: Implement IInputHandler
+public class InputManager : MonoBehaviour, IInputHandler
+{
+    public event Action<Vector2> onMove;
+    public event Action<bool> onFirePressed;
+
+    void Update()
+    {
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+        onMove?.Invoke(new Vector2(moveX, moveY));
+
+        if (Input.GetKeyDown(KeyCode.F))
+            onFirePressed?.Invoke(true);
+        if (Input.GetKeyUp(KeyCode.F))
+            onFirePressed?.Invoke(false);
+    }
+}
+
+// GameManager: Dùng IInputHandler thay vì InputManager trực tiếp
+public class GameManager : MonoBehaviour
+{
+    private IInputHandler inputHandler;
+
+    void Start()
+    {
+        inputHandler = FindObjectOfType<InputManager>();
+        inputHandler.onMove += MovePlayer;
+        inputHandler.onFirePressed += FireBullet;
+    }
+
+    void MovePlayer(Vector2 direction)
+    {
+        Debug.Log("Player moves: " + direction);
+    }
+
+    void FireBullet(bool isPressed)
+    {
+        if (isPressed) Debug.Log("Player shoots!");
+    }
+}
+</code></pre>
+            <p><strong>Lợi ích</strong>: Dễ thay <code>InputManager</code> bằng input khác (như AI) mà không sửa <code>GameManager</code>.</p>
+        </div>
+
+        <div class="section">
+            <h2>Tổng Kết và Áp Dụng cho Game</h2>
+            <ul>
+                <li><strong>SRP</strong>: Tách <code>InputManager</code> và <code>BulletSpawner</code> để mỗi class chỉ làm một việc.</li>
+                <li><strong>OCP</strong>: Dùng <code>IBullet</code> để thêm loại đạn mới mà không sửa code cũ.</li>
+                <li><strong>LSP</strong>: Đảm bảo <code>Boss</code> thay <code>Enemy</code> trong <em>Chế độ Chiến Dịch</em> mà không lỗi.</li>
+                <li><strong>ISP</strong>: Tách <code>IMove</code> và <code>IShoot</code> để <code>Enemy</code> không phụ thuộc vào <code>Shoot</code>.</li>
+                <li><strong>DIP</strong>: Dùng <code>IInputHandler</code> để <code>GameManager</code> linh hoạt hơn.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Tài Nguyên Đề Xuất</h2>
+            <ul>
+                <li><strong>Unity Learn</strong>: Lộ trình miễn phí về thiết kế hướng đối tượng.</li>
+                <li><strong>GameDev.tv (Udemy)</strong>: Khóa học Unity nâng cao, bao gồm SOLID.</li>
+                <li><strong>Cộng đồng</strong>: Tham gia Unity Forum, StackOverflow, nhóm Unity Việt Nam (Facebook).</li>
+            </ul>
+        </div>
+
+        <div class="section references">
+            <h2>Nguồn Tham Khảo</h2>
+            <p>Tài liệu từ: <a href="https://learn.unity.com">Unity Learn</a>, <a href="https://gamedev.tv">GameDev.tv</a>, <a href="https://docs.unity3d.com">Unity Documentation</a>.</p>
+        </div>
+    </div>
+</body>
+</html>
